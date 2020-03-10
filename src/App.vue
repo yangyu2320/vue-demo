@@ -98,7 +98,6 @@
         let fix = document.getElementById("fix");
 
         thead.style.width = tbody.clientWidth + "px";
-
         fix.style.height = tbody.clientHeight + "px";
 
         tbody.onscroll = function () {
