@@ -130,9 +130,6 @@
 </script>
 
 <style>
-
-
-
     .queryPane {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto auto;
@@ -146,9 +143,8 @@
     label {
         white-space: nowrap;
         font-size: 12px;
-        color: rgba(0, 0, 0, 0.6);
+        color: black;
         padding-left: 5px;
-        font-weight: bolder;
     }
 
     .queryPane-item {
@@ -235,5 +231,10 @@
 
     .hoverColor {
         background-color: red;
+    }
+
+    html {
+        font-family: Arial, Helvetica, sans-serif, "微软雅黑";
+        font-weight: 400;
     }
 </style>
