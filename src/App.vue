@@ -3,21 +3,13 @@
         <div class="panel">
             <div class="queryPane">
                 <label>ID</label>
-                <div class="queryPane-item">
-                    <a-input size="small" placeholder="default size"/>
-                </div>
+                <input class="query-item" type="text" placeholder="请输入。。。">
                 <label>用户名</label>
-                <div class="queryPane-item">
-                    <a-input size="small" placeholder="default size"/>
-                </div>
+                <input class="query-item" type="text" placeholder="请输入。。。">
                 <label>手机</label>
-                <div class="queryPane-item">
-                    <a-input size="small" placeholder="default size"/>
-                </div>
+                <input class="query-item" type="text" placeholder="请输入。。。">
                 <label>邮箱</label>
-                <div class="queryPane-item">
-                    <a-input size="small" placeholder="default size"/>
-                </div>
+                <input class="query-item" type="text" placeholder="请输入。。。">
             </div>
             <div class="queryPane-button">
                 <a-button type="primary" size="small" icon="search">查询</a-button>
@@ -25,63 +17,26 @@
             </div>
         </div>
         <div class="split-line"/>
-        <div style="position: relative">
+        <div class="tablePane" style="position: relative">
             <div id="tbody" class="table" style="height: 200px; overflow: scroll; width: 100%">
                 <table width="400px">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>姓名</th>
-                        <th>手机号</th>
-                        <th>电子邮箱</th>
+                        <th style="width: 120px">ID</th>
+                        <th style="width: 100px">姓名</th>
+                        <th style="width: 150px">手机号</th>
+                        <th style="width: 200px">电子邮箱</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="row in data" v-on:click="row.selected=false" v-bind:class="{hoverColor : row.selected}">
-                        <td>{{row.id}}</td>
-                        <td>{{row.name}}</td>
-                        <td>{{row.mobile}}</td>
-                        <td>{{row.selected}}</td>
+                        <td v-on:click="edit">{{row.id}}</td>
+                        <td v-on:click="edit">{{row.name}}</td>
+                        <td v-on:click="edit">{{row.mobile}}</td>
+                        <td v-on:click="edit">{{row.selected}}</td>
                     </tr>
                     </tbody>
-                </table>
-            </div>
-            <div id="thead" class="head" style="overflow: hidden">
-                <table style="width: 400px">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>姓名</th>
-                        <th>手机号</th>
-                        <th>电子邮箱</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-            <div id="fix" class="fix" style="background-color: white; overflow: hidden;">
-                <table style="width: 200px">
-                    <thead style="background-color: #f3faff">
-                    <tr>
-                        <th>ID</th>
-                        <th>姓名</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="row in data" v-on:click="row.selected=false" v-bind:class="{hoverColor : row.selected}">
-                        <td>{{row.id}}</td>
-                        <td>{{row.name}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="fix-thead" class="fix-thead" style="background-color: white;">
-                <table style="width: 200px;  background-color: #f3faff">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>姓名</th>
-                    </tr>
-                    </thead>
+                    <input id="x" class="cell-input" style="text">
                 </table>
             </div>
         </div>
@@ -89,6 +44,7 @@
 </template>
 
 <script>
+
     import axios from "axios";
 
     window.onload = function () {
@@ -124,31 +80,69 @@
                 }).catch(error => {
                     console.log(error);
                 });
+            },
+            edit(event) {
+                var offsetTop = event.currentTarget.offsetTop;
+                var offsetLeft = event.currentTarget.offsetLeft;
+                var offsetHeight = event.currentTarget.offsetHeight;
+                var offsetWidth = event.currentTarget.offsetWidth;
+                document.getElementById("x").style.top = offsetTop + "px";
+                document.getElementById("x").style.left = offsetLeft + "px";
+                document.getElementById("x").style.height = offsetHeight + "px";
+                document.getElementById("x").style.width = offsetWidth + "px";
             }
         }
     };
 </script>
 
 <style>
+
+    table {
+        position: relative;
+    }
+
+    .cell-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
     .queryPane {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto auto;
         grid-template-rows: auto;
-        grid-gap: 5px;
+        grid-gap: 8px;
         width: min-content;
         height: min-content;
         align-items: center;
+    }
+
+    .tablePane {
+        padding: 10px 15px;
     }
 
     label {
         white-space: nowrap;
         font-size: 12px;
         color: black;
-        padding-left: 5px;
+        padding-left: 8px;
+        text-shadow: #ccc;
+
     }
 
-    .queryPane-item {
+    input, .query-item {
         width: 140px;
+        font-size: 12px;
+        border: 1px solid grey;
+        border-radius: 0.2em;
+        border-color: #ccc;
+        padding: 6px 8px;
+        line-height: 14px;
+        outline-style: none;
+    }
+
+    input, .query-item:focus {
+        border-color: #3285e1;
     }
 
     .panel {
@@ -193,8 +187,6 @@
 
     tr td {
         white-space: nowrap;
-        width: 100px;
-        height: 20px;
         overflow: hidden;
     }
 
@@ -204,37 +196,42 @@
         height: 20px;
     }
 
-    .table {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    .fix {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    .fix-thead {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    .head {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: #f3faff;
-    }
-
-    .hoverColor {
-        background-color: red;
-    }
-
     html {
         font-family: Arial, Helvetica, sans-serif, "微软雅黑";
         font-weight: 400;
     }
+
+    table, th, td, tr {
+        border-color: #ccc;
+    }
+
+    thead tr th {
+        padding: 8px 0;
+        font-size: 12px;
+    }
+
+    tbody tr td {
+        padding: 5px 8px;
+        font-size: 12px;
+        font-family: "微软雅黑";
+        color: #000;
+        font-weight: 400;
+    }
+
+    tbody tr:hover {
+        background-color: #ecf4fd;
+    }
+
+    tbody tr td:hover {
+        background-color: #d7e7f5;
+    }
+
+    thead {
+        background-color: #f2f5f8;
+    }
+
+    #x {
+        border-radius: unset;
+    }
+
 </style>
