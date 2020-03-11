@@ -29,11 +29,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="row in data" v-on:click="row.selected=false" v-bind:class="{hoverColor : row.selected}">
-                        <td v-on:click="edit">{{row.id}}</td>
-                        <td v-on:click="edit">{{row.name}}</td>
-                        <td v-on:click="edit">{{row.mobile}}</td>
-                        <td v-on:click="edit">{{row.selected}}</td>
+                    <tr v-for="row in data" @click="editRow">
+                        <td @dblclick="edit">{{row.id}}</td>
+                        <td @dblclick="edit">{{row.name}}</td>
+                        <td @dblclick="edit">{{row.mobile}}</td>
+                        <td @dblclick="edit">{{row.selected}}</td>
                     </tr>
                     </tbody>
                     <input id="x" class="cell-input" style="text">
@@ -62,7 +62,7 @@
         }
     }
 
-    const data = [];
+    const data = [{id: "test"}, {}, {}, {}, {}, {}];
 
     export default {
         mounted() {
@@ -90,6 +90,16 @@
                 document.getElementById("x").style.left = offsetLeft + "px";
                 document.getElementById("x").style.height = offsetHeight + "px";
                 document.getElementById("x").style.width = offsetWidth + "px";
+                document.getElementById("x").focus();
+            },
+            editRow(event) {
+                if (event.currentTarget != this.selectedRow) {
+                    if (this.selectedRow) {
+                        this.selectedRow.classList.remove("selected");
+                    }
+                    this.selectedRow = event.currentTarget;
+                    event.currentTarget.classList.add("selected");
+                }
             }
         }
     };
@@ -213,6 +223,7 @@
     tbody tr td {
         padding: 5px 8px;
         font-size: 12px;
+        height: 28px;
         font-family: "微软雅黑";
         color: #000;
         font-weight: 400;
@@ -222,8 +233,8 @@
         background-color: #ecf4fd;
     }
 
-    tbody tr td:hover {
-        background-color: #d7e7f5;
+    .selected {
+        background-color: #e1f1ff;
     }
 
     thead {
@@ -232,6 +243,9 @@
 
     #x {
         border-radius: unset;
+        font-size: 12px;
+        line-height: 14px;
+        padding: 5px 8px;
     }
 
 </style>
