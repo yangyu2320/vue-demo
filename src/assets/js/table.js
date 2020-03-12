@@ -5,10 +5,6 @@ Potchr.Table = function (params) {
 }
 Potchr.extend(Potchr.Table, Potchr.Object, {
 
-    __init: function() {
-
-    },
-
     getColumns: function () {
         return this.columns || [];
     },
