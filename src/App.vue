@@ -56,7 +56,14 @@
         }
     }
 
-    const data = [{id: "test"}, {}, {}, {}, {}, {}];
+    const data = [{id: "test"}, {}, {}, {}, {}];
+
+    const columns = [
+        {name : "id", label: "ID", width:"120px"},
+        {name : "name", label: "姓名", width:"100px"},
+        {name : "mobile", label: "手机号", width:"150px", hidden: "none"},
+        {name : "email", label: "电子邮箱", width:"200px"}
+    ];
 
     const columns = [
         {name : "id", label: "ID", width:"120px"},
