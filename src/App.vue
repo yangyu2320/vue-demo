@@ -62,7 +62,7 @@
         }
     }
 
-    const data = [{id: "test"}, {}, {}, {}, {}];
+    const data = [{id: "test"}, {}, {}, {}, {}, {}];
 
     export default {
         mounted() {
