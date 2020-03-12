@@ -22,21 +22,15 @@
                 <table width="400px">
                     <thead>
                     <tr>
-                        <th style="width: 120px">ID</th>
-                        <th style="width: 100px">姓名</th>
-                        <th style="width: 150px">手机号</th>
-                        <th style="width: 200px">电子邮箱</th>
+                        <th v-for="column in columns" v-bind:style="{width: column.width, display: column.hidden}">{{column.label}}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="row in data" @click="editRow">
-                        <td @dblclick="edit">{{row.id}}</td>
-                        <td @dblclick="edit">{{row.name}}</td>
-                        <td @dblclick="edit">{{row.mobile}}</td>
-                        <td @dblclick="edit">{{row.selected}}</td>
+                    <tr v-for="(row, i) in data" @click="editRow" v-bind:rowId="i">
+                        <td v-for="column in columns" v-bind:name="column.name" v-bind:style="{display: column.hidden}" @click="edit">{{row[column.name]}}</td>
                     </tr>
                     </tbody>
-                    <input id="x" class="cell-input" style="text">
+                    <input id="x" class="cell-input" v-bind:class="{hidden : hiddenInputCell}" style="text">
                 </table>
             </div>
         </div>
@@ -64,14 +58,28 @@
 
     const data = [{id: "test"}, {}, {}, {}, {}];
 
+    const columns = [
+        {name : "id", label: "ID", width:"120px"},
+        {name : "name", label: "姓名", width:"100px"},
+        {name : "mobile", label: "手机号", width:"150px", hidden: "none"},
+        {name : "email", label: "电子邮箱", width:"200px"}
+    ];
+
     export default {
         mounted() {
             this.loadData();
         },
         data() {
             return {
-                data
+                data,
+                columns,
+                statuEdit: false
             };
+        },
+        computed: {
+            hiddenInputCell: function () {
+                return !this.statuEdit;
+            }
         },
         methods: {
             loadData() {
@@ -82,15 +90,20 @@
                 });
             },
             edit(event) {
-                var offsetTop = event.currentTarget.offsetTop;
-                var offsetLeft = event.currentTarget.offsetLeft;
-                var offsetHeight = event.currentTarget.offsetHeight;
-                var offsetWidth = event.currentTarget.offsetWidth;
+                if (!this.statuEdit) {
+                    this.statuEdit = true;
+                }
+                let offsetTop = event.currentTarget.offsetTop;
+                let offsetLeft = event.currentTarget.offsetLeft;
+                let offsetHeight = event.currentTarget.offsetHeight;
+                let offsetWidth = event.currentTarget.offsetWidth;
                 document.getElementById("x").style.top = offsetTop + "px";
                 document.getElementById("x").style.left = offsetLeft + "px";
                 document.getElementById("x").style.height = offsetHeight + "px";
                 document.getElementById("x").style.width = offsetWidth + "px";
                 document.getElementById("x").focus();
+                document.getElementById("x").value = event.currentTarget.innerText;
+                alert(event.currentTarget.parentElement.getAttribute("rowId") + ":" + event.currentTarget.getAttribute("name"));
             },
             editRow(event) {
                 if (event.currentTarget != this.selectedRow) {
@@ -149,6 +162,10 @@
         padding: 6px 8px;
         line-height: 14px;
         outline-style: none;
+    }
+
+    .hidden {
+        display: none;
     }
 
     input, .query-item:focus {
@@ -246,6 +263,9 @@
         font-size: 12px;
         line-height: 14px;
         padding: 5px 8px;
+        font-family: "微软雅黑";
+        color: #000;
+        font-weight: 400;
     }
 
 </style>
