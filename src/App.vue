@@ -50,8 +50,6 @@
         thead.style.width = tbody.clientWidth + "px";
         fix.style.height = tbody.clientHeight + "px";
 
-        fix.style.alignContent = "xxxxxxxxxxxx";
-
         tbody.onscroll = function () {
             thead.scrollLeft = tbody.scrollLeft;
             fix.scrollTop = tbody.scrollTop;
@@ -66,6 +64,8 @@
         {name : "mobile", label: "手机号", width:"150px", hidden: "none"},
         {name : "email", label: "电子邮箱", width:"200px"}
     ];
+
+    const ax = "xxxxxxxxxxxxxxx";
 
     export default {
         mounted() {
