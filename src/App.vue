@@ -127,6 +127,8 @@
 
     table {
         position: relative;
+        height: 100px;
+        width: 500px;
     }
 
     .cell-input {
