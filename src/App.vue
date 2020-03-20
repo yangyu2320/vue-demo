@@ -65,7 +65,9 @@
         {name : "email", label: "电子邮箱", width:"200px"}
     ];
 
-    const ax = "xxxxxxxxxxxxxxx";
+    let ax = "xxxxxxxxxxxxxxx";
+
+    let dx = ax + "xxxxxxxxx";
 
     export default {
         mounted() {
@@ -75,7 +77,8 @@
             return {
                 data,
                 columns,
-                statuEdit: false
+                statuEdit: false,
+                dx : dx
             };
         },
         computed: {
